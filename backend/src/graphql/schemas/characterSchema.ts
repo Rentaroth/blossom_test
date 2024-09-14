@@ -19,50 +19,9 @@ const characterSchema = buildSchema(`
   type Query {
     getCharacterById(id: ID!): Character
     getCharacters: [Character]
+    getCharactersFiltered(name: String, status: String, species: String, type: String, gender: String, origin: String): [Character]
   }
 `);
-
-interface filterChar {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: string;
-  getCharacter(id: string): JSON
-}
-
-class filterCharacter implements filterChar {
-  id: string;
-  name: string;
-  status: string;
-  species: string;
-  type: string;
-  gender: string;
-  origin: string;
-
-  constructor(
-    id: string,
-    name: string,
-    status: string,
-    species: string,
-    type: string,
-    gender: string,
-    origin: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.status = status;
-    this.species = species;
-    this.type = type;
-    this.gender = gender;
-    this.origin = origin;
-  }
-  getCharacter(id: string):JSON {
-    return JSON.parse('{}')
-  }
-}
 
 // HTTP methods CRUD
 const characterRoot = {
@@ -74,6 +33,15 @@ const characterRoot = {
   },
   getCharacters: async () => {
     const result = await characterModel.findAll();
+    return result;
+    // const response = await axios.get(`${API_URL}/character`);
+    // return response.data.results;
+  },
+
+  getCharactersFiltered: async (args:any) => {
+    console.log(args);
+
+    const result = await characterModel.findAll({ where: args});
     return result;
     // const response = await axios.get(`${API_URL}/character`);
     // return response.data.results;
