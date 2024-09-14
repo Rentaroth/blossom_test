@@ -1,7 +1,8 @@
 import { buildSchema } from "graphql";
 import { characterModel } from "../../db/models/character";
-import { DataTypes } from "sequelize";
-import { sequelize } from "../../db/service";
+import { redisConnection } from "../../db/redis";
+import { timeExecution } from "../../utils/decorators";
+import chalk from "chalk";
 
 
 // Graphql schema for characters
@@ -38,14 +39,19 @@ const characterRoot = {
     // return response.data.results;
   },
 
-  getCharactersFiltered: async (args:any) => {
-    console.log(args);
-
+  getCharactersFiltered: timeExecution(async (args:any) => {
+    const redis = await redisConnection();
+    const response = await redis.get(JSON.stringify(args));
+    if (response) {
+      console.log(chalk.bgGray.magenta.bold(response))
+      return JSON.parse(response);
+    }
     const result = await characterModel.findAll({ where: args});
+    await redis.set(JSON.stringify(args), JSON.stringify(result));
     return result;
     // const response = await axios.get(`${API_URL}/character`);
     // return response.data.results;
-  },
+  }),
 };
 
 export { characterSchema, characterRoot };
