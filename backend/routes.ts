@@ -1,9 +1,20 @@
 import { Router } from "express";
+import {
+  characterSchema,
+  characterRoot,
+} from "./src/graphql/schemas/characterSchema";
+import { createHandler } from "graphql-http/lib/use/express";
 
-const routes = Router()
+const router = Router();
 
 export default (): Router => {
-  // routes.use('/', );
-  
-  return routes;
-}
+  router.use(
+    "/characters",
+    createHandler({
+      schema: characterSchema,
+      rootValue: characterRoot,
+    })
+  );
+
+  return router;
+};
