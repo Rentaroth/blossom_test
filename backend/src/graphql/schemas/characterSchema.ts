@@ -1,9 +1,8 @@
 import { buildSchema } from "graphql";
-const characterModel = require("../../db/models/character.js");
+import { characterModel } from "../../db/models/character";
 import { DataTypes } from "sequelize";
 import { sequelize } from "../../db/service";
 
-const model = characterModel(sequelize, DataTypes);
 
 // Graphql schema for characters
 const characterSchema = buildSchema(`
@@ -18,23 +17,63 @@ const characterSchema = buildSchema(`
   }
 
   type Query {
-    getCharacter(id: ID!): Character
+    getCharacterById(id: ID!): Character
     getCharacters: [Character]
   }
 `);
 
+interface filterChar {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: string;
+  getCharacter(id: string): JSON
+}
+
+class filterCharacter implements filterChar {
+  id: string;
+  name: string;
+  status: string;
+  species: string;
+  type: string;
+  gender: string;
+  origin: string;
+
+  constructor(
+    id: string,
+    name: string,
+    status: string,
+    species: string,
+    type: string,
+    gender: string,
+    origin: string
+  ) {
+    this.id = id;
+    this.name = name;
+    this.status = status;
+    this.species = species;
+    this.type = type;
+    this.gender = gender;
+    this.origin = origin;
+  }
+  getCharacter(id: string):JSON {
+    return JSON.parse('{}')
+  }
+}
+
 // HTTP methods CRUD
 const characterRoot = {
-  getCharacter: async ({ id }: { id: string }) => {
-    console.log("Query!");
-    const result = await model.findOne({ where: { id } });
+  getCharacterById: async ({ id }: { id: string }) => {
+    const result = await characterModel.findOne({ where: { id } });
     return result;
     // const response = await axios.get(`${API_URL}/character/${id}`);
     // return response.data;
   },
   getCharacters: async () => {
-    console.log("All!");
-    const result = await model.findAll();
+    const result = await characterModel.findAll();
     return result;
     // const response = await axios.get(`${API_URL}/character`);
     // return response.data.results;
