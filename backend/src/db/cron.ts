@@ -42,7 +42,7 @@ const cronTask = async () => {
     */
     response.forEach((element: any) => {
       sequelize.query(
-        `INSERT INTO Characters (name, status, species, type, gender, origin, createdAt, updatedAt) VALUES ("${element.name}", "${element.status}", "${element.species}", "${element.type}", "${element.gender}", "${element.origin.name}", "${date}", "${date}");`
+        `INSERT INTO Characters (name, status, species, type, gender, origin, image, favorite, createdAt, updatedAt) VALUES ("${element.name}", "${element.status}", "${element.species}", "${element.type}", "${element.gender}", "${element.origin.name}", "${element.image}", "0", "${date}", "${date}");`
       );
     });
 

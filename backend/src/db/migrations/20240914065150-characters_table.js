@@ -27,6 +27,12 @@ module.exports = {
       origin: {
         type: Sequelize.STRING,
       },
+      image: {
+        type: Sequelize.STRING,
+      },
+      favorite: {
+        type: Sequelize.BOOLEAN,
+      },
       createdAt: {
         type: Sequelize.DATE
       },

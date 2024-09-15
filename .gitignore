@@ -135,3 +135,6 @@ dist
 
 #docker
 docker-compose.yml
+
+#fonts
+/frontend/ricknmorty/fonts/

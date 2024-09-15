@@ -37,6 +37,12 @@ const characterModel = sequelize.define<Character>('Character',
     origin: {
       type: DataTypes.STRING,
     },
+    image: {
+      type: DataTypes.STRING,
+    },
+    favorite: {
+      type: DataTypes.BOOLEAN,
+    },
     createdAt: {
       type: DataTypes.DATE
     },

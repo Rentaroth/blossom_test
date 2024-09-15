@@ -2,6 +2,7 @@ import { buildSchema } from "graphql";
 import { characterModel } from "../../db/models/character";
 import { redisConnection } from "../../db/redis";
 import { timeExecution } from "../../utils/decorators";
+import { Op } from "sequelize";
 import chalk from "chalk";
 
 
@@ -14,13 +15,16 @@ const characterSchema = buildSchema(`
     species: String
     type: String
     gender: String
+    image: String
+    favorite: Boolean
     origin: String
   }
 
   type Query {
     getCharacterById(id: ID!): Character
-    getCharacters: [Character]
-    getCharactersFiltered(name: String, status: String, species: String, type: String, gender: String, origin: String): [Character]
+    getCharacters(order:String): [Character]
+    getCharactersFiltered(name: String, status: String, species: String, type: String, gender: String, image: String, favorite: Boolean, origin: String): [Character]
+    searchQuery(keyword: String!): [Character]
   }
 `);
 
@@ -32,7 +36,15 @@ const characterRoot = {
     // const response = await axios.get(`${API_URL}/character/${id}`);
     // return response.data;
   },
-  getCharacters: async () => {
+  getCharacters: async ({order}: { order: 'ASC'|'DESC' }) => {
+    if (order) {
+      const result = await characterModel.findAll({
+        order:[
+          ['name', `${order}`]
+        ]
+      });
+      return result;
+    }
     const result = await characterModel.findAll();
     return result;
     // const response = await axios.get(`${API_URL}/character`);
@@ -52,6 +64,25 @@ const characterRoot = {
     // const response = await axios.get(`${API_URL}/character`);
     // return response.data.results;
   }),
+
+  searchQuery: async ({ keyword }: { keyword: string }) => {
+    const searchString = `%${keyword}%`;
+
+    const result = await characterModel.findAll({
+      where: {
+        [Op.or]: [
+          { name: { [Op.like]: searchString } },
+          { status: { [Op.like]: searchString } },
+          { species: { [Op.like]: searchString } },
+          { type: { [Op.like]: searchString } },
+          { gender: { [Op.like]: searchString } },
+        ]
+      }
+    });
+    return result;
+    // const response = await axios.get(`${API_URL}/character`);
+    // return response.data.results;
+  },
 };
 
 export { characterSchema, characterRoot };
