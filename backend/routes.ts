@@ -12,7 +12,7 @@ export default (): Router => {
   router.use(
     "/characters",
     reqInfo,
-    // cacheStep,
+    cacheStep,
     createHandler({
       schema: characterSchema,
       rootValue: characterRoot,
