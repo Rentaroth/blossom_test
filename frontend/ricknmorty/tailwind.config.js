@@ -24,6 +24,11 @@ export default {
         '700': "700",
       },
     },
+    screens: {
+      'laptop': '1024px',
+      'laptopL': '1440px',
+      '4K': '2560px',
+    }
   },
   plugins: [],
 };

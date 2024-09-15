@@ -7,7 +7,7 @@ const getRandomIds = () => {
 };
 const cronTask = async () => {
   /*Generate a repetitive function that executes periodically*/
-  cron.schedule("*/1 * * * *", async () => {
+  cron.schedule("* */12 * * *", async () => {
     let chars = "";
     /*
     Obtain 15 id's and store them in a string to insert in url

@@ -26,6 +26,11 @@ const characterSchema = buildSchema(`
     getCharactersFiltered(name: String, status: String, species: String, type: String, gender: String, image: String, favorite: Boolean, origin: String): [Character]
     searchQuery(keyword: String!): [Character]
   }
+
+  type Mutation {
+    favoriteOne(id:ID!): Character
+    unfavoriteOne(id:ID!): Character
+  }
 `);
 
 // HTTP methods CRUD
@@ -82,6 +87,21 @@ const characterRoot = {
     return result;
     // const response = await axios.get(`${API_URL}/character`);
     // return response.data.results;
+  },
+
+  favoriteOne: async ({ id }: { id: string }) => {
+    await characterModel.update({ favorite: 1 }, { where: {id}});
+    const resultOne = await characterModel.findOne({ where: { id } });
+    return resultOne;
+    // const response = await axios.get(`${API_URL}/character/${id}`);
+    // return response.data;
+  },
+  unfavoriteOne: async ({ id }: { id: string }) => {
+    await characterModel.update({ favorite: 0 }, { where: {id}});
+    const resultOne = await characterModel.findOne({ where: { id } });
+    return resultOne;
+    // const response = await axios.get(`${API_URL}/character/${id}`);
+    // return response.data;
   },
 };
 
