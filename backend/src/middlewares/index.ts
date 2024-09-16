@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { redisConnection } from "../db/redis";
-import chalk from "chalk";
 
 const reqInfo = (req:Request, res:Response, next:any) => {
-  console.log(chalk.bgGray.blue.bold(JSON.stringify({ headers: req.rawHeaders, body: req.hostname})));
+  console.log(JSON.stringify({ headers: req.rawHeaders, body: req.hostname}));
   return next()
 }
 

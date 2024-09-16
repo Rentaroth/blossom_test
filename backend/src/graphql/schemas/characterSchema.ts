@@ -3,7 +3,6 @@ import { characterModel } from "../../db/models/character";
 import { redisConnection } from "../../db/redis";
 import { timeExecution } from "../../utils/decorators";
 import { Op } from "sequelize";
-import chalk from "chalk";
 
 
 // Graphql schema for characters
@@ -60,7 +59,7 @@ const characterRoot = {
     const redis = await redisConnection();
     const response = await redis.get(JSON.stringify(args));
     if (response) {
-      console.log(chalk.bgGray.magenta.bold(response))
+      console.log(response)
       return JSON.parse(response);
     }
     const result = await characterModel.findAll({ where: args});
