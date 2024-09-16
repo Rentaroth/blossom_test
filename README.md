@@ -36,6 +36,10 @@ To run this project, you will need to add the following environment variables to
 
 `REDIS_DATABASES`
 
+### Frontend
+
+`VITE_BAKCEND_URL`
+
 ## API Reference
 
 #### Get all characters
@@ -117,6 +121,26 @@ body: {
 }
 ```
 
-| Parameter | Type        | Description                                                                                |
+| Parameter | Type        | Description                                                           |
 | :------------- | :---------- | :--------------------------------------------------------------- |
-| `keyword`      | `string`    | **Required!**, some words that the character info contains |
+| `keyword`      | `string`    | **Required!**, some words that the character info contains       |
+
+## Start the app
+
+The app only need databases in MySQL and Redis to be avaliable, .env files in each project base directory.
+The env variable **VITE_BACKEND_URL** should be exactly this value `http://localhost:3000/` if Backend is running locally, the `/` at the end of the url is mandatory.
+There is a **PM2** configuration file in the base of the GitHub project, the project should be initiated installing **PM2** globally:
+
+`npm install -g pm2`
+
+Then:
+
+`pm2 start pm2.config.json`
+
+or:
+
+`pm2 start ${path_to_config.json}`
+
+And that's all!
+
+Greetings!
