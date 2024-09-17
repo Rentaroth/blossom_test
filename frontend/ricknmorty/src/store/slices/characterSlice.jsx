@@ -114,7 +114,7 @@ const favoriteQuery = createAsyncThunk("favoriteQuery", async (info, api) => {
   if (info.operation === "favorite") {
     queryString = {
       query: `mutation {
-          favoriteOne(id:${info.id}) {
+          favoriteOne(id:"${info.id}") {
             id
             name
             species
@@ -142,7 +142,7 @@ const favoriteQuery = createAsyncThunk("favoriteQuery", async (info, api) => {
   if (info.operation === "unfavorite") {
     queryString = {
       query: `mutation {
-          unfavoriteOne(id:${info.id}) {
+          unfavoriteOne(id:"${info.id}") {
             id
             name
             species

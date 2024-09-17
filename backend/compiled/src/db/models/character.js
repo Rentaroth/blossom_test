@@ -5,7 +5,7 @@ const sequelize_1 = require("sequelize");
 const service_1 = require("../service");
 class Character extends sequelize_1.Model {
 }
-const characterModel = service_1.sequelize.define('Character', {
+const characterModel = service_1.sequelize.define("Characters", {
     id: {
         type: sequelize_1.DataTypes.STRING,
         primaryKey: true,
@@ -35,10 +35,13 @@ const characterModel = service_1.sequelize.define('Character', {
         type: sequelize_1.DataTypes.BOOLEAN,
     },
     createdAt: {
-        type: sequelize_1.DataTypes.DATE
+        type: sequelize_1.DataTypes.DATE,
     },
     updatedAt: {
-        type: sequelize_1.DataTypes.DATE
+        type: sequelize_1.DataTypes.DATE,
+    },
+    deletedAt: {
+        type: sequelize_1.DataTypes.DATE,
     },
 });
 exports.characterModel = characterModel;

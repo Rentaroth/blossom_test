@@ -1,5 +1,7 @@
+import { UUIDV4 } from "sequelize";
 import { sequelize } from "./service";
 const cron = require("node-cron");
+import { v4 as uuidv4 } from 'uuid';
 
 const getRandomIds = () => {
   /*This obtains random number from 1 to 826 to be used as character id in the request*/
@@ -7,7 +9,7 @@ const getRandomIds = () => {
 };
 const cronTask = async () => {
   /*Generate a repetitive function that executes periodically*/
-  cron.schedule("* */12 * * *", async () => {
+  cron.schedule("*/1 * * * *", async () => {
     let chars = "";
     /*
     Obtain 15 id's and store them in a string to insert in url
@@ -42,7 +44,7 @@ const cronTask = async () => {
     */
     response.forEach((element: any) => {
       sequelize.query(
-        `INSERT INTO Characters (name, status, species, type, gender, origin, image, favorite, createdAt, updatedAt) VALUES ("${element.name}", "${element.status}", "${element.species}", "${element.type}", "${element.gender}", "${element.origin.name}", "${element.image}", "0", "${date}", "${date}");`
+        `INSERT INTO Characters (id, name, status, species, type, gender, origin, image, favorite, createdAt, updatedAt, deletedAt) VALUES ("${uuidv4()}","${element.name}", "${element.status}", "${element.species}", "${element.type}", "${element.gender}", "${element.origin.name}", "${element.image}", "0", "${date}", "${date}", null);`
       );
     });
 

@@ -155,7 +155,7 @@ function Home() {
             </div>
           </main>
           <section className=" w-full h-[82vh] px-8 pt-[15px] bg-transparent text-lightFont font-700 overflow-y-auto overscroll-y-auto hide_scrollbar">
-            <h2 className=" text-[#2563EB]">{characters.length} Results</h2>
+            <h2 className=" text-[#2563EB]">{characters && characters.length} Results</h2>
             <div className=" mb-4">
               <div className=" my-6">
                 <h2 className=" text-[12px] laptopL:text-[14px]">STARRED CHARACTERS (N°)</h2>

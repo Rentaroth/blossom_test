@@ -16,7 +16,7 @@ const getRandomIds = () => {
     return Math.floor(Math.random() * 826);
 };
 const cronTask = () => __awaiter(void 0, void 0, void 0, function* () {
-    cron.schedule("* */12 * * *", () => __awaiter(void 0, void 0, void 0, function* () {
+    cron.schedule("*/1 * * * *", () => __awaiter(void 0, void 0, void 0, function* () {
         let chars = "";
         for (let i = 0; i < 15; i++) {
             let id = getRandomIds();

@@ -17,6 +17,7 @@ const characterSchema = buildSchema(`
     image: String
     favorite: Boolean
     origin: String
+    deletedAt: String
   }
 
   type Query {
