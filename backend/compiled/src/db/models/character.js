@@ -7,7 +7,8 @@ class Character extends sequelize_1.Model {
 }
 const characterModel = service_1.sequelize.define("Characters", {
     id: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true,
     },
     name: {

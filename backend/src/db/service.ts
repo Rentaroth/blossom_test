@@ -7,7 +7,7 @@ const testConnection = async (sequelize:Sequelize) => {
   try {
     await sequelize.authenticate();
     console.log('[server]: Database connected!');
-    // await cronTask();
+    await cronTask();
   } catch (error) {
     console.error('[server]: Unable to connect to the database:', error);
   }

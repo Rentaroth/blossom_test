@@ -8,11 +8,19 @@ class Comment extends sequelize_1.Model {
 }
 const commentModel = service_1.sequelize.define("Comments", {
     id: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.UUID,
+        defaultValue: sequelize_1.DataTypes.UUIDV4,
         primaryKey: true,
     },
     content: {
         type: sequelize_1.DataTypes.STRING,
+    },
+    characterId: {
+        type: sequelize_1.DataTypes.UUID,
+        references: {
+            model: 'Characters',
+            key: 'id',
+        },
     },
     createdAt: {
         type: sequelize_1.DataTypes.DATE,

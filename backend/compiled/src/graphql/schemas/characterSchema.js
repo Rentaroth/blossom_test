@@ -26,6 +26,7 @@ const characterSchema = (0, graphql_1.buildSchema)(`
     image: String
     favorite: Boolean
     origin: String
+    deletedAt: String
   }
 
   type Query {
